@@ -2,7 +2,7 @@
 
 ---
 
-# 🪙 Sistema de Moeda Estudantil 👨‍💻
+# Sistema de Moeda Estudantil
 
 <table>
   <tr>
@@ -13,7 +13,7 @@
     </td>
     <td>
       <div>
-        🪙🎓
+        <!-- Espaço para logo futura, se desejar -->
       </div>
     </td>
   </tr>
@@ -48,7 +48,7 @@
 
 ---
 
-## 📝 Sobre o Projeto
+## Sobre o Projeto
 
 O **Sistema de Moeda Estudantil** foi desenvolvido como projeto da disciplina de **Laboratório de Desenvolvimento de Software** na PUC Minas. O sistema aborda o problema de falta de mecanismos de reconhecimento e incentivo ao mérito estudantil nas instituições de ensino.
 
@@ -69,30 +69,30 @@ Uma plataforma web que implementa um sistema de moeda virtual onde:
 
 ---
 
-## ✨ Funcionalidades Principais
+## Funcionalidades Principais
 
-- 🔐 **Autenticação Segura:** Login com email/senha e autorização por roles (Aluno, Professor, Empresa).
-- 👨‍🎓 **Cadastro de Aluno:** Registro com dados pessoais e seleção de instituição pré-cadastrada.
-- 🏢 **Cadastro de Empresa Parceira:** Registro de empresas com CNPJ e gestão de vantagens.
-- 🪙 **Envio de Moedas:** Professores enviam moedas a alunos com motivo obrigatório.
-- 📊 **Extrato de Conta:** Visualização de saldo e histórico de transações para alunos e professores.
-- 🎁 **Cadastro de Vantagens:** Empresas cadastram vantagens com descrição, foto e custo em moedas.
-- 🎫 **Resgate de Vantagens:** Alunos resgatam vantagens com geração de cupom único.
-- 📧 **Notificações por Email:** Emails automáticos para recebimento de moedas e resgate de cupons.
-- 🔄 **Recarga Semestral:** Sistema adiciona automaticamente 1.000 moedas/semestre aos professores.
+- **Autenticação Segura:** Login com email/senha e autorização por roles (Aluno, Professor, Empresa).
+- **Cadastro de Aluno:** Registro com dados pessoais e seleção de instituição pré-cadastrada.
+- **Cadastro de Empresa Parceira:** Registro de empresas com CNPJ e gestão de vantagens.
+- **Envio de Moedas:** Professores enviam moedas a alunos com motivo obrigatório.
+- **Extrato de Conta:** Visualização de saldo e histórico de transações para alunos e professores.
+- **Cadastro de Vantagens:** Empresas cadastram vantagens com descrição, foto e custo em moedas.
+- **Resgate de Vantagens:** Alunos resgatam vantagens com geração de cupom único.
+- **Notificações por Email:** Emails automáticos para recebimento de moedas e resgate de cupons.
+- **Recarga Semestral:** Sistema adiciona automaticamente 1.000 moedas/semestre aos professores.
 
 ---
 
-## 🛠 Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
-### 💻 Front-end
+### Front-end
 
 * **Framework:** React 18
 * **Linguagem:** JavaScript ES6+
 * **Build Tool:** Vite 5.x
 * **HTTP Client:** Axios
 
-### 🖥️ Back-end
+### Back-end
 
 * **Linguagem:** Java 17 (JDK)
 * **Framework:** Spring Boot 3.x
@@ -102,14 +102,14 @@ Uma plataforma web que implementa um sistema de moeda virtual onde:
 * **Email:** Spring Boot Starter Mail (JavaMail)
 * **Scheduler:** Spring Scheduler (@Scheduled)
 
-### ⚙️ Infraestrutura
+### Infraestrutura
 
 * **Build:** Maven
 * **Containerização:** Docker (opcional)
 
 ---
 
-## 🏗 Arquitetura
+## Arquitetura
 
 O sistema segue a arquitetura **MVC (Model-View-Controller)** distribuída em dois módulos:
 
@@ -126,9 +126,9 @@ O sistema segue a arquitetura **MVC (Model-View-Controller)** distribuída em do
 
 ```mermaid
 graph LR
-    FE["🖥️ Frontend<br/>React + Vite"] -->|REST API| BE["⚙️ Backend<br/>Spring Boot"]
-    BE --> DB[("🗄️ PostgreSQL")]
-    BE --> SMTP["📧 SMTP<br/>Email"]
+    FE["Frontend<br/>React + Vite"] -->|REST API| BE["Backend<br/>Spring Boot"]
+    BE --> DB[("PostgreSQL")]
+    BE --> SMTP["SMTP<br/>Email"]
 ```
 
 📄 **Diagrama completo:** [docs/diagramas/diagrama_componentes.md](./docs/diagramas/diagrama_componentes.md)
@@ -141,11 +141,11 @@ A Sprint 1 produziu os seguintes artefatos de modelagem:
 
 | Artefato | Documento |
 |---|---|
-| 📊 **Diagrama de Casos de Uso** | [diagrama_casos_uso.md](./docs/diagramas/diagrama_casos_uso.md) |
-| 📝 **Histórias do Usuário** | [historias_usuario.md](./docs/historias_usuario.md) |
-| 🏗️ **Diagrama de Classes** | [diagrama_classes.md](./docs/diagramas/diagrama_classes.md) |
-| 🔧 **Diagrama de Componentes** | [diagrama_componentes.md](./docs/diagramas/diagrama_componentes.md) |
-| 📋 **Documento Consolidado** | [modelagem_sprint1.md](./docs/modelagem_sprint1.md) |
+| **Diagrama de Casos de Uso** | [diagrama_casos_uso.md](./docs/diagramas/diagrama_casos_uso.md) |
+| **Histórias do Usuário** | [historias_usuario.md](./docs/historias_usuario.md) |
+| **Diagrama de Classes** | [diagrama_classes.md](./docs/diagramas/diagrama_classes.md) |
+| **Diagrama de Componentes** | [diagrama_componentes.md](./docs/diagramas/diagrama_componentes.md) |
+| **Documento Consolidado** | [modelagem_sprint1.md](./docs/modelagem_sprint1.md) |
 
 ### Entidades do Sistema
 
@@ -190,7 +190,7 @@ classDiagram
 
 ---
 
-## 🔧 Instalação e Execução
+## Instalação e Execução
 
 > ⚠️ **Nota:** A implementação do código será realizada nas Sprints 2 e 3. Esta seção será atualizada conforme o desenvolvimento avança.
 
@@ -207,13 +207,13 @@ classDiagram
 # Terminal 1: Backend
 cd backend
 ./mvnw spring-boot:run
-# 🚀 Backend em http://localhost:8080
+# Backend em http://localhost:8080
 
 # Terminal 2: Frontend
 cd frontend
 npm install
 npm run dev
-# 🎨 Frontend em http://localhost:5173
+# Frontend em http://localhost:5173
 ```
 
 ---
@@ -222,19 +222,19 @@ npm run dev
 
 ```
 Sistema_de_Moeda_Estudantil/
-├── .gitignore                           # 🧹 Arquivos ignorados pelo Git
-├── README.md                            # 📘 Documentação principal
-├── template_README.md                   # 📄 Template de referência
+├── .gitignore                           # Arquivos ignorados pelo Git
+├── README.md                            # Documentação principal
+├── template_README.md                   # Template de referência
 │
-├── /docs                                # 📚 Documentação do projeto
-│   ├── modelagem_sprint1.md             # 📋 Documento consolidado da Sprint 1
-│   ├── historias_usuario.md             # 📝 Histórias do usuário
-│   └── /diagramas                       # 📊 Diagramas UML
-│       ├── diagrama_casos_uso.md        # 📊 Diagrama de Casos de Uso
-│       ├── diagrama_classes.md          # 🏗️ Diagrama de Classes
-│       └── diagrama_componentes.md      # 🔧 Diagrama de Componentes
+├── /docs                                # Documentação do projeto
+│   ├── modelagem_sprint1.md             # Documento consolidado da Sprint 1
+│   ├── historias_usuario.md             # Histórias do usuário
+│   └── /diagramas                       # Diagramas UML
+│       ├── diagrama_casos_uso.md        # Diagrama de Casos de Uso
+│       ├── diagrama_classes.md          # Diagrama de Classes
+│       └── diagrama_componentes.md      # Diagrama de Componentes
 │
-├── /backend                             # ⚙️ (Sprint 2+) Spring Boot
+├── /backend                             # (Sprint 2+) Spring Boot
 │   ├── pom.xml
 │   └── /src/main/java/com/sme/
 │       ├── /controller
@@ -245,7 +245,7 @@ Sistema_de_Moeda_Estudantil/
 │       ├── /config
 │       └── /exception
 │
-└── /frontend                            # 🖥️ (Sprint 2+) React + Vite
+└── /frontend                            # (Sprint 2+) React + Vite
     ├── package.json
     └── /src
         ├── /components
@@ -276,7 +276,7 @@ Sistema_de_Moeda_Estudantil/
 
 ---
 
-## 🙏 Agradecimentos
+## Agradecimentos
 
 * [**Engenharia de Software PUC Minas**](https://www.instagram.com/engsoftwarepucminas/) — Pelo apoio institucional e estrutura acadêmica.
 * [**Prof. Dr. João Paulo Aramuni**](https://github.com/joaopauloaramuni) — Pelos ensinamentos sobre Arquitetura de Software e Padrões de Projeto.
