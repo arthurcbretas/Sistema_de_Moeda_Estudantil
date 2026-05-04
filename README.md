@@ -69,17 +69,30 @@ Uma plataforma web que implementa um sistema de moeda virtual onde:
 
 ---
 
-## Funcionalidades Principais
+## Funcionalidades Implementadas (Release 1 - Sprints 2 e 3)
 
-- **Autenticação Segura:** Login com email/senha e autorização por roles (Aluno, Professor, Empresa).
-- **Cadastro de Aluno:** Registro com dados pessoais e seleção de instituição pré-cadastrada.
-- **Cadastro de Empresa Parceira:** Registro de empresas com CNPJ e gestão de vantagens.
-- **Envio de Moedas:** Professores enviam moedas a alunos com motivo obrigatório.
-- **Extrato de Conta:** Visualização de saldo e histórico de transações para alunos e professores.
-- **Cadastro de Vantagens:** Empresas cadastram vantagens com descrição, foto e custo em moedas.
-- **Resgate de Vantagens:** Alunos resgatam vantagens com geração de cupom único.
-- **Notificações por Email:** Emails automáticos para recebimento de moedas e resgate de cupons.
-- **Recarga Semestral:** Sistema adiciona automaticamente 1.000 moedas/semestre aos professores.
+### ✅ Completo
+- [x] **Autenticação JWT (stateless):** Login e autorização por roles (Aluno, Professor, Empresa, Admin).
+- [x] **Autorização RBAC (4 perfis):** Controle de acesso rigoroso nas rotas do back-end e front-end.
+- [x] **CRUD completo de Aluno:** (Admin + auto-edição)
+- [x] **CRUD completo de Empresa:** (Admin + auto-edição)
+- [x] **CRUD completo de Professor:** (Admin + Batch Upload via CSV)
+  - [📥 Baixar Template de Professores (CSV)](./template_professores.csv)
+  - > ⚠️ **Segurança (MVP):** Professores cadastrados via CSV recebem o CPF como senha padrão. A funcionalidade de troca obrigatória de senha no primeiro login será implementada na Release 2.
+- [x] **CRUD completo de Instituição:** (Admin)
+- [x] **CRUD completo de Vantagem:** (Empresa + Admin) *Antecipação estratégica para infraestrutura*
+- [x] **Painéis isolados por perfil:** Dashboards restritos por perfil.
+- [x] **Vitrine Pública de Vantagens:** Acessível livremente via `/vantagens`.
+- [x] **Design Responsivo:** Glassmorphism e Dark/Light Mode.
+
+### ⏳ Planejado para Release 2
+- [ ] Professor enviar moedas para aluno
+- [ ] Aluno resgatar vantagens
+- [ ] Sistema de cupons e autenticação presencial
+- [ ] Notificações por email
+- [ ] Consulta de extrato de transações
+- [ ] Recarga semestral automática (1000 moedas)
+- [ ] Dashboard com gráficos/analytics
 
 ---
 

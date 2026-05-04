@@ -1,6 +1,8 @@
 package com.sme.model.enums;
 
-public enum TipoUsuario {
+public enum Role {
+    ADMIN,
     ALUNO,
+    EMPRESA,
     PROFESSOR
 }

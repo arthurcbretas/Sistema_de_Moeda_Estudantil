@@ -1,6 +1,6 @@
 package com.sme.model;
 
-import com.sme.model.enums.TipoUsuario;
+import com.sme.model.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -46,5 +46,5 @@ public abstract class Usuario {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_usuario", insertable = false, updatable = false)
-    private TipoUsuario tipoUsuario;
+    private Role role;
 }
