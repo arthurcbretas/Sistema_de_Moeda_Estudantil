@@ -8,6 +8,7 @@ import com.sme.model.InstituicaoEnsino;
 import com.sme.repository.AlunoRepository;
 import com.sme.repository.InstituicaoEnsinoRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,13 +21,16 @@ public class AlunoService {
     private final AlunoRepository alunoRepository;
     private final InstituicaoEnsinoRepository instituicaoRepository;
     private final AlunoMapper mapper;
+    private final PasswordEncoder passwordEncoder;
 
     public AlunoService(AlunoRepository alunoRepository,
                         InstituicaoEnsinoRepository instituicaoRepository,
-                        AlunoMapper mapper) {
+                        AlunoMapper mapper,
+                        PasswordEncoder passwordEncoder) {
         this.alunoRepository = alunoRepository;
         this.instituicaoRepository = instituicaoRepository;
         this.mapper = mapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional(readOnly = true)
@@ -60,8 +64,8 @@ public class AlunoService {
                             "Instituição não encontrada com id: " + dto.instituicaoId()));
         }
 
-        // TODO: Hash da senha com BCrypt na Sprint 3 (autenticação)
         Aluno aluno = mapper.toEntity(dto, instituicao);
+        aluno.setSenha(passwordEncoder.encode(dto.senha()));
         Aluno salvo = alunoRepository.save(aluno);
         return mapper.toDTO(salvo);
     }
@@ -86,6 +90,9 @@ public class AlunoService {
         }
 
         mapper.updateEntity(aluno, dto, instituicao);
+        if (dto.senha() != null && !dto.senha().isBlank()) {
+            aluno.setSenha(passwordEncoder.encode(dto.senha()));
+        }
         Aluno atualizado = alunoRepository.save(aluno);
         return mapper.toDTO(atualizado);
     }

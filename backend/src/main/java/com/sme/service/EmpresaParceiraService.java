@@ -6,6 +6,7 @@ import com.sme.mapper.EmpresaParceiraMapper;
 import com.sme.model.EmpresaParceira;
 import com.sme.repository.EmpresaParceiraRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,11 +18,14 @@ public class EmpresaParceiraService {
 
     private final EmpresaParceiraRepository empresaRepository;
     private final EmpresaParceiraMapper mapper;
+    private final PasswordEncoder passwordEncoder;
 
     public EmpresaParceiraService(EmpresaParceiraRepository empresaRepository,
-                                  EmpresaParceiraMapper mapper) {
+                                  EmpresaParceiraMapper mapper,
+                                  PasswordEncoder passwordEncoder) {
         this.empresaRepository = empresaRepository;
         this.mapper = mapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional(readOnly = true)
@@ -46,8 +50,8 @@ public class EmpresaParceiraService {
             throw new IllegalArgumentException("CNPJ já cadastrado: " + dto.cnpj());
         }
 
-        // TODO: Hash da senha com BCrypt na Sprint 3
         EmpresaParceira empresa = mapper.toEntity(dto);
+        empresa.setSenha(passwordEncoder.encode(dto.senha()));
         EmpresaParceira salva = empresaRepository.save(empresa);
         return mapper.toDTO(salva);
     }
@@ -64,6 +68,9 @@ public class EmpresaParceiraService {
         }
 
         mapper.updateEntity(empresa, dto);
+        if (dto.senha() != null && !dto.senha().isBlank()) {
+            empresa.setSenha(passwordEncoder.encode(dto.senha()));
+        }
         EmpresaParceira atualizada = empresaRepository.save(empresa);
         return mapper.toDTO(atualizada);
     }
