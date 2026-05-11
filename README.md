@@ -30,7 +30,11 @@
 ![Vite](https://img.shields.io/badge/Vite-5.x-007ec6?style=for-the-badge&logo=vite&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-007ec6?style=for-the-badge&logo=postgresql&logoColor=white)
 
-**📌 Sprint atual:** Sprint 1 — Modelagem do Sistema
+**📌 Sprint atual:** Sprint 3 — Release 1 & 2 (Infraestrutura, Segurança e Deploy Completo)
+
+🚀 **Acesso ao Sistema em Produção:**
+- **Backend API:** `https://sistemademoedaestudantil-production.up.railway.app`
+- **Banco de Dados:** PostgreSQL (Railway)
 
 ---
 
@@ -69,9 +73,9 @@ Uma plataforma web que implementa um sistema de moeda virtual onde:
 
 ---
 
-## Funcionalidades Implementadas (Release 1 - Sprints 2 e 3)
+## Funcionalidades Implementadas
 
-### ✅ Completo
+### ✅ Concluído (Sprints 1, 2 e 3)
 - [x] **Autenticação JWT (stateless):** Login e autorização por roles (Aluno, Professor, Empresa, Admin).
 - [x] **Autorização RBAC (4 perfis):** Controle de acesso rigoroso nas rotas do back-end e front-end.
 - [x] **CRUD completo de Aluno:** (Admin + auto-edição)
@@ -85,14 +89,12 @@ Uma plataforma web que implementa um sistema de moeda virtual onde:
 - [x] **Vitrine Pública de Vantagens:** Acessível livremente via `/vantagens`.
 - [x] **Design Responsivo:** Glassmorphism e Dark/Light Mode.
 
-### ⏳ Planejado para Release 2
-- [ ] Professor enviar moedas para aluno
-- [ ] Aluno resgatar vantagens
-- [ ] Sistema de cupons e autenticação presencial
-- [ ] Notificações por email
-- [ ] Consulta de extrato de transações
-- [ ] Recarga semestral automática (1000 moedas)
-- [ ] Dashboard com gráficos/analytics
+- [x] **Transações de Moedas:** Professor envia moedas para alunos com motivo.
+- [x] **Resgate de Vantagens:** Alunos resgatam produtos/descontos com moedas acumuladas.
+- [x] **Extrato de Transações:** Consulta detalhada de fluxo (entradas e saídas) por usuário.
+- [x] **Recarga Semestral:** Agendador Spring Scheduler para distribuir moedas aos professores.
+- [x] **Notificações:** Envio de email transacional em tempo real (Spring Mail).
+- [x] **Deploy Nuvem (Railway):** Pipeline de Build nativo (Railpack) e Docker, Banco PostgreSQL hospedado.
 
 ---
 
@@ -205,29 +207,37 @@ classDiagram
 
 ## Instalação e Execução
 
-> ⚠️ **Nota:** A implementação do código será realizada nas Sprints 2 e 3. Esta seção será atualizada conforme o desenvolvimento avança.
-
 ### Pré-requisitos
 
 * **Java JDK:** Versão **17** ou superior
 * **Node.js:** Versão LTS (v18.x ou superior)
 * **PostgreSQL:** Versão 16 ou superior
 * **Maven:** Versão 3.9.x ou superior
+* **Docker:** (Opcional) para deploy
 
-### Estrutura Planejada
+### Rodando Localmente
 
+**1. Backend**
+Na pasta `backend/src/main/resources`, configure as variáveis de ambiente no `application.properties` (ou defina-as na sua máquina). O sistema usa o banco de dados em nuvem ou local, dependendo das suas variáveis `PGHOST`, `PGUSER`, etc.
 ```bash
-# Terminal 1: Backend
 cd backend
 ./mvnw spring-boot:run
-# Backend em http://localhost:8080
+```
+O backend iniciará na porta `8080`.
 
-# Terminal 2: Frontend
+**2. Frontend**
+Na pasta `frontend`, adicione um arquivo `.env` com a variável `VITE_API_URL=http://localhost:8080/api` (ou apontando para a nuvem).
+```bash
 cd frontend
 npm install
 npm run dev
-# Frontend em http://localhost:5173
 ```
+O frontend iniciará na porta `5173` ou `5174`.
+
+### Deploy em Nuvem (Railway)
+- O backend possui um `Dockerfile` multi-stage que compila via Maven e roda em imagem JRE leve.
+- O banco de dados PostgreSQL roda como um serviço no Railway.
+- O frontend possui as dependências necessárias para rodar direto via Node/Vite no Railway.
 
 ---
 
