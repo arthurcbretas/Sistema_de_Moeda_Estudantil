@@ -46,7 +46,7 @@ export default function InstituicaoForm() {
         await instituicaoApi.cadastrar(form);
         showToast('Instituição cadastrada!', 'success');
       }
-      setTimeout(() => navigate('/instituicoes'), 1000);
+      setTimeout(() => navigate('/admin/instituicoes'), 1000);
     } catch (err) {
       if (err.details) setErrors(err.details);
       else showToast(err.message || 'Erro ao salvar', 'error');
@@ -78,7 +78,7 @@ export default function InstituicaoForm() {
             <input className="form-input" type="text" name="endereco" value={form.endereco} onChange={handleChange} placeholder="Endereço completo" />
           </div>
           <div className="form-actions">
-            <button type="button" className="btn btn-secondary" onClick={() => navigate('/instituicoes')}>Cancelar</button>
+            <button type="button" className="btn btn-secondary" onClick={() => navigate('/admin/instituicoes')}>Cancelar</button>
             <button type="submit" className="btn btn-primary" disabled={loading}>
               {loading ? <><Loader2 size={16} className="animate-spin" /> Salvando...</> : isEditing ? <><Save size={16} /> Atualizar</> : <><Check size={16} /> Cadastrar</>}
             </button>

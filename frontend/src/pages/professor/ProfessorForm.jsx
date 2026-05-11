@@ -65,7 +65,7 @@ export default function ProfessorForm() {
         await professorApi.cadastrar(payload);
         showToast('Professor cadastrado!', 'success');
       }
-      setTimeout(() => navigate('/professores'), 1000);
+      setTimeout(() => navigate('/admin/professores'), 1000);
     } catch (err) {
       if (err.details) setErrors(err.details);
       else showToast(err.message || 'Erro ao salvar', 'error');
@@ -125,7 +125,7 @@ export default function ProfessorForm() {
             </div>
           </div>
           <div className="form-actions">
-            <button type="button" className="btn btn-secondary" onClick={() => navigate('/professores')}>Cancelar</button>
+            <button type="button" className="btn btn-secondary" onClick={() => navigate('/admin/professores')}>Cancelar</button>
             <button type="submit" className="btn btn-primary" disabled={loading}>
               {loading ? <><Loader2 size={16} className="animate-spin" /> Salvando...</> : isEditing ? <><Save size={16} /> Atualizar</> : <><Check size={16} /> Cadastrar</>}
             </button>

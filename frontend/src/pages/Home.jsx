@@ -1,23 +1,10 @@
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { alunoApi, empresaApi } from '../services/api';
-import { UserPlus, Building, Users, Building2, CircleDollarSign, Ticket } from 'lucide-react';
+import { UserPlus, LogIn, CircleDollarSign, Ticket, Users, Building2, LayoutDashboard, ScrollText, Send, Plus } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import heroCoin from '../assets/hero-coin.png';
 
 export default function Home() {
-  const [stats, setStats] = useState({ alunos: 0, empresas: 0 });
-
-  useEffect(() => {
-    Promise.all([alunoApi.listar(), empresaApi.listar()])
-      .then(([alunosRes, empresasRes]) => {
-        setStats({
-          alunos: alunosRes.data.length,
-          empresas: empresasRes.data.length,
-        });
-      })
-      .catch(() => {});
-  }, []);
-
+  const { user } = useAuth();
   return (
     <div className="main-content">
       <section className="hero">
@@ -28,25 +15,55 @@ export default function Home() {
           distribuem moedas, alunos trocam por vantagens em empresas parceiras.
         </p>
         <div className="hero-actions">
-          <Link to="/alunos/novo" className="btn btn-primary" id="btn-novo-aluno-home">
-            <UserPlus size={18} /> Cadastrar Aluno
-          </Link>
-          <Link to="/empresas/nova" className="btn btn-secondary" id="btn-nova-empresa-home">
-            <Building size={18} /> Cadastrar Empresa
-          </Link>
+          {!user ? (
+            <>
+              <Link to="/registrar" className="btn btn-primary" id="btn-criar-conta-home">
+                <UserPlus size={18} /> Criar Conta
+              </Link>
+              <Link to="/login" className="btn btn-secondary" id="btn-login-home">
+                <LogIn size={18} /> Entrar
+              </Link>
+            </>
+          ) : user.role === 'ADMIN' ? (
+            <Link to="/dashboard" className="btn btn-primary">
+              <LayoutDashboard size={18} /> Acessar Painel
+            </Link>
+          ) : user.role === 'ALUNO' ? (
+            <>
+              <Link to="/vantagens" className="btn btn-primary">
+                <Ticket size={18} /> Ver Vantagens
+              </Link>
+              <Link to="/extrato" className="btn btn-secondary">
+                <ScrollText size={18} /> Meu Extrato
+              </Link>
+            </>
+          ) : user.role === 'PROFESSOR' ? (
+            <>
+              <Link to="/moedas/enviar" className="btn btn-primary">
+                <Send size={18} /> Enviar Moedas
+              </Link>
+              <Link to="/extrato" className="btn btn-secondary">
+                <ScrollText size={18} /> Meu Extrato
+              </Link>
+            </>
+          ) : user.role === 'EMPRESA' ? (
+            <>
+              <Link to="/vantagens/nova" className="btn btn-primary">
+                <Plus size={18} /> Nova Vantagem
+              </Link>
+              <Link to="/vantagens" className="btn btn-secondary">
+                <Ticket size={18} /> Minhas Vantagens
+              </Link>
+            </>
+          ) : null}
         </div>
       </section>
 
       <div className="stats-grid">
         <div className="stat-card">
           <div className="stat-icon"><Users size={36} color="var(--accent-gold)" /></div>
-          <div className="stat-value">{stats.alunos}</div>
-          <div className="stat-label">Alunos Cadastrados</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-icon"><Building2 size={36} color="var(--accent-gold)" /></div>
-          <div className="stat-value">{stats.empresas}</div>
-          <div className="stat-label">Empresas Parceiras</div>
+          <div className="stat-value">Alunos</div>
+          <div className="stat-label">Recebem moedas por mérito</div>
         </div>
         <div className="stat-card">
           <div className="stat-icon"><CircleDollarSign size={36} color="var(--accent-gold)" /></div>
@@ -55,8 +72,13 @@ export default function Home() {
         </div>
         <div className="stat-card">
           <div className="stat-icon"><Ticket size={36} color="var(--accent-gold)" /></div>
-          <div className="stat-value">∞</div>
-          <div className="stat-label">Vantagens Disponíveis</div>
+          <div className="stat-value">Vantagens</div>
+          <div className="stat-label">Troque moedas por benefícios</div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-icon"><Building2 size={36} color="var(--accent-gold)" /></div>
+          <div className="stat-value">Empresas</div>
+          <div className="stat-label">Parceiras oferecem descontos</div>
         </div>
       </div>
     </div>

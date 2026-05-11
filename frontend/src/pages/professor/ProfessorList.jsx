@@ -69,7 +69,7 @@ export default function ProfessorList() {
           <Upload size={18} /> {uploading ? 'Importando...' : 'Importar CSV'}
           <input type="file" accept=".csv" onChange={handleCsvUpload} style={{ display: 'none' }} disabled={uploading} />
         </label>
-        <Link to="/professores/novo" className="btn btn-primary"><Plus size={18} /> Novo Professor</Link>
+        <Link to="/admin/professores/novo" className="btn btn-primary"><Plus size={18} /> Novo Professor</Link>
       </div>
       {professores.length === 0 ? (
         <div className="empty-state">
@@ -91,7 +91,7 @@ export default function ProfessorList() {
                   <td><span className="badge badge-gold" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}><CircleDollarSign size={14} /> {p.saldoMoedas}</span></td>
                   <td>
                     <div className="table-actions">
-                      <Link to={`/professores/editar/${p.id}`} className="btn btn-secondary btn-sm"><Pencil size={14} /> Editar</Link>
+                      <Link to={`/admin/professores/editar/${p.id}`} className="btn btn-secondary btn-sm"><Pencil size={14} /> Editar</Link>
                       <button className="btn btn-danger btn-sm" onClick={() => setDeleteTarget(p)}><Trash2 size={14} /> Remover</button>
                     </div>
                   </td>

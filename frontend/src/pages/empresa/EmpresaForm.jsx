@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { empresaApi } from '../../services/api';
 import { Building2, Save, Check, Loader2 } from 'lucide-react';
 
 export default function EmpresaForm() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { id } = useParams();
   const isEditing = Boolean(id);
+  const isPublicRegister = location.pathname.startsWith('/registrar');
 
   const [form, setForm] = useState({ nome: '', email: '', senha: '', cnpj: '' });
   const [errors, setErrors] = useState({});
@@ -53,7 +55,7 @@ export default function EmpresaForm() {
         await empresaApi.cadastrar(payload);
         showToast('Empresa cadastrada!', 'success');
       }
-      setTimeout(() => navigate('/empresas'), 1000);
+      setTimeout(() => navigate(isPublicRegister ? '/login' : '/admin/empresas'), 1000);
     } catch (err) {
       if (err.details) setErrors(err.details);
       else showToast(err.message || 'Erro ao salvar', 'error');
@@ -70,8 +72,8 @@ export default function EmpresaForm() {
   return (
     <div className="main-content">
       <div className="page-header">
-        <h1><span className="icon" style={{ display: 'flex' }}><Building2 size={32} /></span>{isEditing ? 'Editar Empresa' : 'Nova Empresa'}</h1>
-        <p className="subtitle">{isEditing ? 'Atualize os dados da empresa' : 'Cadastre uma nova empresa parceira'}</p>
+        <h1><span className="icon" style={{ display: 'flex' }}><Building2 size={32} /></span>{isPublicRegister ? 'Cadastro de Empresa' : isEditing ? 'Editar Empresa' : 'Nova Empresa'}</h1>
+        <p className="subtitle">{isPublicRegister ? 'Cadastre sua empresa para oferecer vantagens' : isEditing ? 'Atualize os dados da empresa' : 'Cadastre uma nova empresa parceira'}</p>
       </div>
       <div className="card" style={{ maxWidth: '700px' }}>
         <form onSubmit={handleSubmit} id="form-empresa">
@@ -100,7 +102,7 @@ export default function EmpresaForm() {
             </div>
           </div>
           <div className="form-actions">
-            <button type="button" className="btn btn-secondary" onClick={() => navigate('/empresas')}>Cancelar</button>
+            <button type="button" className="btn btn-secondary" onClick={() => navigate(isPublicRegister ? '/registrar' : '/admin/empresas')}>Cancelar</button>
             <button type="submit" className="btn btn-primary" disabled={loading} id="btn-salvar-empresa">
               {loading ? <><Loader2 size={16} className="animate-spin" /> Salvando...</> : isEditing ? <><Save size={16} /> Atualizar</> : <><Check size={16} /> Cadastrar</>}
             </button>

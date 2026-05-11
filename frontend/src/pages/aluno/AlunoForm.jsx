@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { alunoApi, instituicaoApi } from '../../services/api';
 import { GraduationCap, Save, Check, Loader2 } from 'lucide-react';
 
 export default function AlunoForm() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { id } = useParams();
   const isEditing = Boolean(id);
+  const isPublicRegister = location.pathname.startsWith('/registrar');
 
   const [form, setForm] = useState({
     nome: '', email: '', senha: '', cpf: '',
@@ -73,7 +75,7 @@ export default function AlunoForm() {
         await alunoApi.cadastrar(payload);
         showToast('Aluno cadastrado com sucesso!', 'success');
       }
-      setTimeout(() => navigate('/alunos'), 1000);
+      setTimeout(() => navigate(isPublicRegister ? '/login' : '/admin/alunos'), 1000);
     } catch (err) {
       if (err.details) {
         setErrors(err.details);
@@ -95,10 +97,10 @@ export default function AlunoForm() {
       <div className="page-header">
         <h1>
           <span className="icon" style={{ display: 'flex' }}><GraduationCap size={32} /></span>
-          {isEditing ? 'Editar Aluno' : 'Novo Aluno'}
+          {isPublicRegister ? 'Cadastro de Aluno' : isEditing ? 'Editar Aluno' : 'Novo Aluno'}
         </h1>
         <p className="subtitle">
-          {isEditing ? 'Atualize os dados do aluno' : 'Cadastre um novo aluno no sistema'}
+          {isPublicRegister ? 'Crie sua conta para participar do sistema' : isEditing ? 'Atualize os dados do aluno' : 'Cadastre um novo aluno no sistema'}
         </p>
       </div>
 
@@ -196,7 +198,7 @@ export default function AlunoForm() {
           </div>
 
           <div className="form-actions">
-            <button type="button" className="btn btn-secondary" onClick={() => navigate('/alunos')}>
+            <button type="button" className="btn btn-secondary" onClick={() => navigate(isPublicRegister ? '/registrar' : '/admin/alunos')}>
               Cancelar
             </button>
             <button type="submit" className="btn btn-primary" disabled={loading} id="btn-salvar-aluno">

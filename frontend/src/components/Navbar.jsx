@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { CircleDollarSign, Home, GraduationCap, Building2, Users, Ticket, ScrollText, Send, LogIn, LogOut, LayoutDashboard } from 'lucide-react';
+import { CircleDollarSign, Home, GraduationCap, Building2, Users, Ticket, ScrollText, Send, LogIn, LogOut, LayoutDashboard, Landmark, Shield } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import { useAuth } from '../context/AuthContext';
 
@@ -27,6 +27,14 @@ export default function Navbar() {
           </Link>
         </li>
 
+        {/* Vantagens — visível para todos */}
+        <li>
+          <Link to="/vantagens" className={isActive('/vantagens')}>
+            <Ticket size={18} /> Vantagens
+          </Link>
+        </li>
+
+        {/* Dashboard — qualquer logado */}
         {user && (
           <li>
             <Link to="/dashboard" className={isActive('/dashboard')}>
@@ -35,45 +43,54 @@ export default function Navbar() {
           </li>
         )}
 
-        {/* Menu para ALUNO */}
+        {/* ALUNO: Extrato */}
         {user?.role === 'ALUNO' && (
-          <>
-            <li><Link to="/vantagens" className={isActive('/vantagens')}><Ticket size={18} /> Vantagens</Link></li>
-            <li><Link to="/extrato" className={isActive('/extrato')}><ScrollText size={18} /> Extrato</Link></li>
-          </>
+          <li>
+            <Link to="/extrato" className={isActive('/extrato')}>
+              <ScrollText size={18} /> Extrato
+            </Link>
+          </li>
         )}
 
-        {/* Menu para PROFESSOR */}
+        {/* PROFESSOR: Enviar Moedas + Extrato */}
         {user?.role === 'PROFESSOR' && (
           <>
-            <li><Link to="/moedas/enviar" className={isActive('/moedas')}><Send size={18} /> Enviar Moedas</Link></li>
-            <li><Link to="/alunos" className={isActive('/alunos')}><GraduationCap size={18} /> Alunos</Link></li>
-            <li><Link to="/extrato" className={isActive('/extrato')}><ScrollText size={18} /> Extrato</Link></li>
+            <li>
+              <Link to="/moedas/enviar" className={isActive('/moedas')}>
+                <Send size={18} /> Enviar Moedas
+              </Link>
+            </li>
+            <li>
+              <Link to="/extrato" className={isActive('/extrato')}>
+                <ScrollText size={18} /> Extrato
+              </Link>
+            </li>
           </>
         )}
 
-        {/* Menu para EMPRESA */}
-        {user?.role === 'EMPRESA' && (
+        {/* ADMIN: Gerenciamento */}
+        {user?.role === 'ADMIN' && (
           <>
-            <li><Link to="/vantagens" className={isActive('/vantagens')}><Ticket size={18} /> Vantagens</Link></li>
-          </>
-        )}
-
-        {/* Menu admin - visível para qualquer logado (simplificação) */}
-        {user && (
-          <>
-            <li><Link to="/professores" className={isActive('/professores')}><Users size={18} /> Professores</Link></li>
-            <li><Link to="/empresas" className={isActive('/empresas')}><Building2 size={18} /> Empresas</Link></li>
-            <li><Link to="/instituicoes" className={isActive('/instituicoes')}><Building2 size={18} /> Instituições</Link></li>
-          </>
-        )}
-
-        {/* Não logado - links de cadastro público */}
-        {!user && (
-          <>
-            <li><Link to="/alunos/novo" className={isActive('/alunos')}><GraduationCap size={18} /> Cadastrar Aluno</Link></li>
-            <li><Link to="/empresas/nova" className={isActive('/empresas')}><Building2 size={18} /> Cadastrar Empresa</Link></li>
-            <li><Link to="/vantagens" className={isActive('/vantagens')}><Ticket size={18} /> Vantagens</Link></li>
+            <li>
+              <Link to="/admin/alunos" className={isActive('/admin/alunos')}>
+                <GraduationCap size={18} /> Alunos
+              </Link>
+            </li>
+            <li>
+              <Link to="/admin/professores" className={isActive('/admin/professores')}>
+                <Users size={18} /> Professores
+              </Link>
+            </li>
+            <li>
+              <Link to="/admin/empresas" className={isActive('/admin/empresas')}>
+                <Building2 size={18} /> Empresas
+              </Link>
+            </li>
+            <li>
+              <Link to="/admin/instituicoes" className={isActive('/admin/instituicoes')}>
+                <Landmark size={18} /> Instituições
+              </Link>
+            </li>
           </>
         )}
 
@@ -85,7 +102,11 @@ export default function Navbar() {
             </button>
           </li>
         ) : (
-          <li><Link to="/login" className={isActive('/login')}><LogIn size={18} /> Entrar</Link></li>
+          <li>
+            <Link to="/login" className={isActive('/login')}>
+              <LogIn size={18} /> Entrar
+            </Link>
+          </li>
         )}
 
         <li style={{ marginLeft: '0.5rem', display: 'flex', alignItems: 'center' }}>

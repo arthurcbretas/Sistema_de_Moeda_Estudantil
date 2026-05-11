@@ -2,6 +2,7 @@ package com.sme.service;
 
 import com.sme.dto.TransacaoDTO;
 import com.sme.model.Transacao;
+import com.sme.model.enums.TipoTransacao;
 import com.sme.repository.TransacaoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,13 +20,13 @@ public class TransacaoService {
     }
 
     public List<TransacaoDTO> extratoPorAluno(Long alunoId) {
-        return transacaoRepository.findByAlunoIdOrderByDataDesc(alunoId).stream()
+        return transacaoRepository.findByAlunoIdAndTipoNotOrderByDataDesc(alunoId, TipoTransacao.ENVIO).stream()
                 .map(this::toDTO)
                 .toList();
     }
 
     public List<TransacaoDTO> extratoPorProfessor(Long professorId) {
-        return transacaoRepository.findByProfessorIdOrderByDataDesc(professorId).stream()
+        return transacaoRepository.findByProfessorIdAndTipoOrderByDataDesc(professorId, TipoTransacao.ENVIO).stream()
                 .map(this::toDTO)
                 .toList();
     }

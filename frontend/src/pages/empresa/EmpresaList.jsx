@@ -42,13 +42,13 @@ export default function EmpresaList() {
         <p className="subtitle">Gerenciamento de empresas parceiras</p>
       </div>
       <div style={{ marginBottom: 'var(--space-lg)', display: 'flex', justifyContent: 'flex-end' }}>
-        <Link to="/empresas/nova" className="btn btn-primary" id="btn-nova-empresa"><Plus size={18} /> Nova Empresa</Link>
+        <Link to="/admin/empresas/nova" className="btn btn-primary" id="btn-nova-empresa"><Plus size={18} /> Nova Empresa</Link>
       </div>
       {empresas.length === 0 ? (
         <div className="empty-state">
           <div className="icon" style={{ display: 'flex', justifyContent: 'center' }}><Building2 size={48} /></div>
           <p>Nenhuma empresa cadastrada.</p>
-          <Link to="/empresas/nova" className="btn btn-primary">Cadastrar Primeira Empresa</Link>
+          <Link to="/admin/empresas/nova" className="btn btn-primary">Cadastrar Primeira Empresa</Link>
         </div>
       ) : (
         <div className="table-container">
@@ -62,7 +62,7 @@ export default function EmpresaList() {
                   <td>{e.cnpj}</td>
                   <td>
                     <div className="table-actions">
-                      <Link to={`/empresas/editar/${e.id}`} className="btn btn-secondary btn-sm"><Pencil size={14} /> Editar</Link>
+                      <Link to={`/admin/empresas/editar/${e.id}`} className="btn btn-secondary btn-sm"><Pencil size={14} /> Editar</Link>
                       <button className="btn btn-danger btn-sm" onClick={() => setDeleteTarget(e)}><Trash2 size={14} /> Remover</button>
                     </div>
                   </td>

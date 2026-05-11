@@ -82,6 +82,12 @@ export default function Login() {
             {loading ? <><Loader2 size={16} className="animate-spin" /> Entrando...</> : <><LogIn size={16} /> Entrar</>}
           </button>
         </form>
+
+        <div style={{ textAlign: 'center', marginTop: 'var(--space-lg)' }}>
+          <p className="subtitle">
+            Não possui conta? <a href="/registrar" style={{ color: 'var(--accent-gold)', textDecoration: 'underline' }}>Criar Conta</a>
+          </p>
+        </div>
       </div>
 
       {toast && <div className={`toast toast-${toast.type}`}>{toast.msg}</div>}

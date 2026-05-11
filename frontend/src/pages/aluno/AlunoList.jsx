@@ -59,7 +59,7 @@ export default function AlunoList() {
       </div>
 
       <div style={{ marginBottom: 'var(--space-lg)', display: 'flex', justifyContent: 'flex-end' }}>
-        <Link to="/alunos/novo" className="btn btn-primary" id="btn-novo-aluno">
+        <Link to="/admin/alunos/novo" className="btn btn-primary" id="btn-novo-aluno">
           <Plus size={18} /> Novo Aluno
         </Link>
       </div>
@@ -68,7 +68,7 @@ export default function AlunoList() {
         <div className="empty-state">
           <div className="icon" style={{ display: 'flex', justifyContent: 'center' }}><GraduationCap size={48} /></div>
           <p>Nenhum aluno cadastrado ainda.</p>
-          <Link to="/alunos/novo" className="btn btn-primary">
+          <Link to="/admin/alunos/novo" className="btn btn-primary">
             Cadastrar Primeiro Aluno
           </Link>
         </div>
@@ -104,7 +104,7 @@ export default function AlunoList() {
                   <td>
                     <div className="table-actions">
                       <Link
-                        to={`/alunos/editar/${aluno.id}`}
+                        to={`/admin/alunos/editar/${aluno.id}`}
                         className="btn btn-secondary btn-sm"
                         id={`btn-editar-aluno-${aluno.id}`}
                       >

@@ -1,5 +1,6 @@
 package com.sme.config;
 
+import com.sme.model.Admin;
 import com.sme.model.Aluno;
 import com.sme.model.EmpresaParceira;
 import com.sme.model.InstituicaoEnsino;
@@ -8,6 +9,7 @@ import com.sme.repository.AlunoRepository;
 import com.sme.repository.EmpresaParceiraRepository;
 import com.sme.repository.InstituicaoEnsinoRepository;
 import com.sme.repository.ProfessorRepository;
+import com.sme.repository.UsuarioRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,17 +25,20 @@ public class DataInitializer implements CommandLineRunner {
     private final ProfessorRepository professorRepository;
     private final AlunoRepository alunoRepository;
     private final EmpresaParceiraRepository empresaRepository;
+    private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
 
     public DataInitializer(InstituicaoEnsinoRepository instituicaoRepository,
                            ProfessorRepository professorRepository,
                            AlunoRepository alunoRepository,
                            EmpresaParceiraRepository empresaRepository,
+                           UsuarioRepository usuarioRepository,
                            PasswordEncoder passwordEncoder) {
         this.instituicaoRepository = instituicaoRepository;
         this.professorRepository = professorRepository;
         this.alunoRepository = alunoRepository;
         this.empresaRepository = empresaRepository;
+        this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -89,6 +94,17 @@ public class DataInitializer implements CommandLineRunner {
             emp.setCnpj("11.111.111/0001-11");
             empresaRepository.save(emp);
             System.out.println("✅ DataInitializer: empresa demo criada.");
+        }
+
+        // Seed de admin para testes
+        if (usuarioRepository.findByEmail("admin@demo.com").isEmpty()) {
+            Admin admin = new Admin();
+            admin.setNome("Administrador");
+            admin.setEmail("admin@demo.com");
+            admin.setSenha(passwordEncoder.encode("123456"));
+            admin.setCpf("000.000.000-00");
+            usuarioRepository.save(admin);
+            System.out.println("✅ DataInitializer: admin demo criado.");
         }
     }
 }

@@ -42,7 +42,7 @@ export default function InstituicaoList() {
         <p className="subtitle">Gerenciamento de instituições cadastradas</p>
       </div>
       <div style={{ marginBottom: 'var(--space-lg)', display: 'flex', justifyContent: 'flex-end' }}>
-        <Link to="/instituicoes/nova" className="btn btn-primary"><Plus size={18} /> Nova Instituição</Link>
+        <Link to="/admin/instituicoes/nova" className="btn btn-primary"><Plus size={18} /> Nova Instituição</Link>
       </div>
       {instituicoes.length === 0 ? (
         <div className="empty-state">
@@ -60,7 +60,7 @@ export default function InstituicaoList() {
                   <td>{i.endereco || '—'}</td>
                   <td>
                     <div className="table-actions">
-                      <Link to={`/instituicoes/editar/${i.id}`} className="btn btn-secondary btn-sm"><Pencil size={14} /> Editar</Link>
+                      <Link to={`/admin/instituicoes/editar/${i.id}`} className="btn btn-secondary btn-sm"><Pencil size={14} /> Editar</Link>
                       <button className="btn btn-danger btn-sm" onClick={() => setDeleteTarget(i)}><Trash2 size={14} /> Remover</button>
                     </div>
                   </td>
