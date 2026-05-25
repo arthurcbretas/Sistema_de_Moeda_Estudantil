@@ -5,6 +5,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import org.springframework.scheduling.annotation.Async;
+
 @Service
 public class EmailService {
 
@@ -20,6 +22,7 @@ public class EmailService {
         this.mailSender = mailSender;
     }
 
+    @Async
     public void enviarEmail(String to, String subject, String body) {
         if (!mailEnabled) {
             System.out.println("[EMAIL SIMULADO] Para: " + to + " | Assunto: " + subject);
