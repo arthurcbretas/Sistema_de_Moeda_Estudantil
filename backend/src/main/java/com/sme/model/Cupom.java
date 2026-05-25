@@ -35,6 +35,12 @@ public class Cupom {
     @Column(nullable = false, length = 20)
     private StatusCupom status = StatusCupom.GERADO;
 
+    @Column(name = "vantagem_descricao", nullable = false)
+    private String vantagemDescricao;
+
+    @Column(name = "valor_moedas", nullable = false)
+    private Double valorMoedas;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "aluno_id", nullable = false)
     private Aluno aluno;

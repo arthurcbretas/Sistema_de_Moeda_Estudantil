@@ -73,4 +73,17 @@ public class EmailService {
                 nomeEmpresa, nomeAluno, vantagemDescricao, codigoCupom);
         enviarEmail(emailEmpresa, subject, body);
     }
+
+    public void enviarConfirmacaoEnvioProfessor(String emailProfessor, String nomeProfessor,
+                                                String nomeAluno, double valor, String motivo, double saldoRestante) {
+        String subject = "Moeda Estudantil - Confirmação de envio de moedas";
+        String body = String.format(
+                "Olá %s,\n\n" +
+                "Esta é uma confirmação de que você enviou com sucesso %.0f moeda(s) para o aluno %s.\n\n" +
+                "Motivo: %s\n\n" +
+                "Seu saldo restante: %.0f moeda(s).\n\n" +
+                "Sistema de Moeda Estudantil",
+                nomeProfessor, valor, nomeAluno, motivo, saldoRestante);
+        enviarEmail(emailProfessor, subject, body);
+    }
 }

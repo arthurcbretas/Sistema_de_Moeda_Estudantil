@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.*;
 public class ResgateController {
 
     private final ResgateService resgateService;
+    private final com.sme.service.CupomService cupomService;
 
-    public ResgateController(ResgateService resgateService) {
+    public ResgateController(ResgateService resgateService, com.sme.service.CupomService cupomService) {
         this.resgateService = resgateService;
+        this.cupomService = cupomService;
     }
 
     @PostMapping
@@ -26,5 +28,11 @@ public class ResgateController {
         Long alunoId = (Long) auth.getCredentials();
         CupomDTO cupom = resgateService.resgatarVantagem(alunoId, dto.vantagemId());
         return ResponseEntity.status(HttpStatus.CREATED).body(cupom);
+    }
+
+    @GetMapping("/meus-cupons")
+    public ResponseEntity<java.util.List<CupomDTO>> meusCupons(Authentication auth) {
+        Long alunoId = (Long) auth.getCredentials();
+        return ResponseEntity.ok(cupomService.listarPorAluno(alunoId));
     }
 }

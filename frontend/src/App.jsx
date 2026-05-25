@@ -29,6 +29,7 @@ import EnvioMoedas from './pages/professor/EnvioMoedas';
 import VantagemList from './pages/vantagem/VantagemList';
 import VantagemForm from './pages/vantagem/VantagemForm';
 import Extrato from './pages/extrato/Extrato';
+import MeusCupons from './pages/aluno/MeusCupons';
 
 function DashboardRouter() {
   const { user } = useAuth();
@@ -86,6 +87,9 @@ function App() {
 
             {/* ═══ Extrato (Aluno + Professor) ═══ */}
             <Route path="/extrato" element={<ProtectedRoute roles={['ALUNO', 'PROFESSOR']}><Extrato /></ProtectedRoute>} />
+
+            {/* ═══ Aluno: Meus Cupons ═══ */}
+            <Route path="/meus-cupons" element={<ProtectedRoute roles={['ALUNO']}><MeusCupons /></ProtectedRoute>} />
 
             {/* ═══ Fallback ═══ */}
             <Route path="*" element={<Navigate to="/" replace />} />

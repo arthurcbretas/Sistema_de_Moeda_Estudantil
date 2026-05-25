@@ -78,6 +78,11 @@ public class MoedaService {
                 aluno.getEmail(), aluno.getNome(),
                 professor.getNome(), dto.valor(), dto.motivo());
 
+        // Notificar professor por email
+        emailService.enviarConfirmacaoEnvioProfessor(
+                professor.getEmail(), professor.getNome(),
+                aluno.getNome(), dto.valor(), dto.motivo(), professor.getSaldoMoedas());
+
         return new TransacaoDTO(
                 envio.getId(), envio.getValor(), envio.getData(),
                 envio.getMotivo(), envio.getTipo().name(),

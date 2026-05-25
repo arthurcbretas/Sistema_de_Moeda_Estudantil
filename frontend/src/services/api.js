@@ -118,6 +118,7 @@ export const moedaApi = {
 // ══════════════════════════════════════
 export const resgateApi = {
   resgatar: (data) => api.post('/resgates', data),
+  meusCupons: () => api.get('/resgates/meus-cupons'),
 };
 
 // ══════════════════════════════════════

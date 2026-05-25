@@ -86,7 +86,13 @@ export default function VantagemForm() {
           <div className="form-row">
             <div className="form-group">
               <label className="form-label">URL da Foto</label>
-              <input className="form-input" type="text" name="fotoUrl" value={form.fotoUrl} onChange={handleChange} placeholder="https://..." />
+              <input className={`form-input ${errors.fotoUrl ? 'error' : ''}`} type="text" name="fotoUrl" value={form.fotoUrl} onChange={handleChange} placeholder="https://..." />
+              {errors.fotoUrl && <span className="form-error">{errors.fotoUrl}</span>}
+              {form.fotoUrl && !errors.fotoUrl && (
+                <div style={{ marginTop: 'var(--space-md)' }}>
+                  <img src={form.fotoUrl} alt="Preview" onError={() => setErrors(prev => ({...prev, fotoUrl: 'URL de imagem inválida'}))} style={{ width: '100%', height: '140px', objectFit: 'cover', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }} />
+                </div>
+              )}
             </div>
             <div className="form-group">
               <label className="form-label">Custo em Moedas *</label>

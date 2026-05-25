@@ -40,6 +40,11 @@ export default function DashboardAluno() {
           <p style={{ fontSize: '1.2rem', fontWeight: 600, margin: 'var(--space-sm) 0' }}>Vantagens</p>
           <p className="subtitle">Resgate vantagens</p>
         </Link>
+        <Link to="/meus-cupons" className="card" style={{ textAlign: 'center', textDecoration: 'none' }}>
+          <Ticket size={32} color="var(--success)" />
+          <p style={{ fontSize: '1.2rem', fontWeight: 600, margin: 'var(--space-sm) 0' }}>Meus Cupons</p>
+          <p className="subtitle">Ver códigos resgatados</p>
+        </Link>
         <Link to="/extrato" className="card" style={{ textAlign: 'center', textDecoration: 'none' }}>
           <ScrollText size={32} color="var(--accent-gold)" />
           <p style={{ fontSize: '1.2rem', fontWeight: 600, margin: 'var(--space-sm) 0' }}>Extrato</p>

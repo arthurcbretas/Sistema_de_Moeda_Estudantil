@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { moedaApi, alunoApi } from '../../services/api';
-import { Send, Loader2 } from 'lucide-react';
+import { moedaApi, alunoApi, professorApi } from '../../services/api';
+import { useAuth } from '../../context/AuthContext';
+import { Send, Loader2, CircleDollarSign } from 'lucide-react';
 
 export default function EnvioMoedas() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [alunos, setAlunos] = useState([]);
+  const [professorSaldo, setProfessorSaldo] = useState(null);
   const [form, setForm] = useState({ alunoId: '', valor: '', motivo: '' });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -13,7 +16,12 @@ export default function EnvioMoedas() {
 
   useEffect(() => {
     alunoApi.listar().then((res) => setAlunos(res.data)).catch(() => {});
-  }, []);
+    if (user?.userId) {
+      professorApi.buscar(user.userId)
+        .then((res) => setProfessorSaldo(res.data?.saldoMoedas))
+        .catch(() => {});
+    }
+  }, [user]);
 
   const validate = () => {
     const errs = {};
@@ -42,6 +50,9 @@ export default function EnvioMoedas() {
       });
       showToast('Moedas enviadas com sucesso!', 'success');
       setForm({ alunoId: '', valor: '', motivo: '' });
+      if (professorSaldo !== null) {
+        setProfessorSaldo(prev => prev - Number(form.valor));
+      }
     } catch (err) {
       showToast(err.message || 'Erro ao enviar moedas', 'error');
     } finally {
@@ -56,9 +67,19 @@ export default function EnvioMoedas() {
 
   return (
     <div className="main-content">
-      <div className="page-header">
-        <h1><span className="icon" style={{ display: 'flex' }}><Send size={32} /></span>Enviar Moedas</h1>
-        <p className="subtitle">Reconheça um aluno enviando moedas</p>
+      <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 'var(--space-md)' }}>
+        <div>
+          <h1><span className="icon" style={{ display: 'flex' }}><Send size={32} /></span>Enviar Moedas</h1>
+          <p className="subtitle">Reconheça um aluno enviando moedas</p>
+        </div>
+        {professorSaldo !== null && (
+          <div className="card" style={{ padding: 'var(--space-sm) var(--space-md)', display: 'flex', alignItems: 'center', gap: 'var(--space-sm)', margin: 0 }}>
+            <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>Seu saldo:</span>
+            <span style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--accent-gold)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <CircleDollarSign size={20} /> {professorSaldo}
+            </span>
+          </div>
+        )}
       </div>
       <div className="card" style={{ maxWidth: '600px' }}>
         <form onSubmit={handleSubmit}>

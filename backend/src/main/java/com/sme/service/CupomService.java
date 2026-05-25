@@ -25,12 +25,24 @@ public class CupomService {
 
     public Cupom gerarCupom(Aluno aluno, Vantagem vantagem, EmpresaParceira empresa) {
         Cupom cupom = new Cupom();
-        cupom.setCodigo(UUID.randomUUID().toString());
+        String uniqueCode = "SME-" + generateRandomString(4) + "-" + generateRandomString(4);
+        cupom.setCodigo(uniqueCode);
         cupom.setStatus(StatusCupom.GERADO);
         cupom.setAluno(aluno);
         cupom.setVantagem(vantagem);
         cupom.setEmpresa(empresa);
+        cupom.setVantagemDescricao(vantagem.getDescricao());
+        cupom.setValorMoedas(vantagem.getCustoMoedas());
         return cupomRepository.save(cupom);
+    }
+
+    private String generateRandomString(int length) {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            sb.append(chars.charAt((int) (Math.random() * chars.length())));
+        }
+        return sb.toString();
     }
 
     @Transactional(readOnly = true)

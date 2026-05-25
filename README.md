@@ -30,11 +30,12 @@
 ![Vite](https://img.shields.io/badge/Vite-5.x-007ec6?style=for-the-badge&logo=vite&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-007ec6?style=for-the-badge&logo=postgresql&logoColor=white)
 
-**📌 Sprint atual:** Sprint 3 — Release 1 & 2 (Infraestrutura, Segurança e Deploy Completo)
+**📌 Sprint atual:** Release 2 (Sprints 1 e 2) — Sistema de Cupons, Extratos, Emails e Estratégia de Deploy
 
-🚀 **Acesso ao Sistema em Produção:**
-- **Backend API:** `https://sistemademoedaestudantil-production.up.railway.app`
-- **Banco de Dados:** PostgreSQL (Railway)
+🚀 **Acesso ao Sistema em Produção (Estratégia de Deploy Gratuito):**
+- **Frontend (Vercel):** Single Page Application Vite via Vercel (Otimizado via `.env.production`)
+- **Backend (Render):** Deploy Blueprint contínuo via Docker
+- **Banco de Dados:** Neon Serverless PostgreSQL
 
 ---
 
@@ -89,12 +90,14 @@ Uma plataforma web que implementa um sistema de moeda virtual onde:
 - [x] **Vitrine Pública de Vantagens:** Acessível livremente via `/vantagens`.
 - [x] **Design Responsivo:** Glassmorphism e Dark/Light Mode.
 
-- [x] **Transações de Moedas:** Professor envia moedas para alunos com motivo.
-- [x] **Resgate de Vantagens:** Alunos resgatam produtos/descontos com moedas acumuladas.
-- [x] **Extrato de Transações:** Consulta detalhada de fluxo (entradas e saídas) por usuário.
-- [x] **Recarga Semestral:** Agendador Spring Scheduler para distribuir moedas aos professores.
-- [x] **Notificações:** Envio de email transacional em tempo real (Spring Mail).
-- [x] **Deploy Nuvem (Railway):** Pipeline de Build nativo (Railpack) e Docker, Banco PostgreSQL hospedado.
+- [x] **Transações de Moedas:** Professor envia moedas para alunos com motivo obrigatório.
+- [x] **Resgate de Vantagens:** Alunos resgatam produtos/descontos (geração do código único `SME-XXXX-XXXX`).
+- [x] **Gestão de Cupons (Meus Cupons):** Alunos gerenciam seus códigos resgatados com histórico mantido (mesmo se vantagem for removida).
+- [x] **Extrato Enriquecido:** Cards de resumo, filtros por tipo (Envio/Resgate) e visualização de saldos em tempo real.
+- [x] **Recarga Semestral:** Agendador Spring (`@Scheduled`) roda 1º Fev/Ago distribuindo 1.000 moedas aos professores.
+- [x] **Notificações Reais:** Envio de email transacional em tempo real (Spring Mail) para aluno e confirmações de saldo para professor.
+- [x] **Deploy Nuvem Inteligente:** Pipeline com Neon (Banco), Render (Backend via Dockerfile/render.yaml) e Vercel (Frontend).
+- [x] **Modelagem Diagramas:** 8 diagramas de sequência Mermaid completos para documentação de fluxos.
 
 ---
 
@@ -161,6 +164,7 @@ A Sprint 1 produziu os seguintes artefatos de modelagem:
 | **Diagrama de Classes** | [diagrama_classes.md](./docs/diagramas/diagrama_classes.md) |
 | **Diagrama de Componentes** | [diagrama_componentes.md](./docs/diagramas/diagrama_componentes.md) |
 | **Documento Consolidado** | [modelagem_sprint1.md](./docs/modelagem_sprint1.md) |
+| **Diagramas de Sequência (S2)** | [docs/diagramas/](./docs/diagramas) (Cadastro, Login, Envio, Resgate, Extrato e Geral) |
 
 ### Entidades do Sistema
 
@@ -234,10 +238,10 @@ npm run dev
 ```
 O frontend iniciará na porta `5173` ou `5174`.
 
-### Deploy em Nuvem (Railway)
-- O backend possui um `Dockerfile` multi-stage que compila via Maven e roda em imagem JRE leve.
-- O banco de dados PostgreSQL roda como um serviço no Railway.
-- O frontend possui as dependências necessárias para rodar direto via Node/Vite no Railway.
+### Deploy em Nuvem (Render / Neon / Vercel)
+- **Banco de Dados (Neon):** A conexão é garantida por certificado SSL no `application-prod.properties`.
+- **Backend (Render):** O backend possui um `Dockerfile` multi-stage que compila via Maven e roda em imagem JRE leve. Existe o `render.yaml` pronto para IaC.
+- **Frontend (Vercel):** O frontend possui as dependências prontas para deploy SPA rápido no Vercel com a env-var `VITE_API_URL` apontando para o Render.
 
 ---
 

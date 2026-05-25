@@ -43,13 +43,20 @@ export default function Navbar() {
           </li>
         )}
 
-        {/* ALUNO: Extrato */}
+        {/* ALUNO: Extrato & Meus Cupons */}
         {user?.role === 'ALUNO' && (
-          <li>
-            <Link to="/extrato" className={isActive('/extrato')}>
-              <ScrollText size={18} /> Extrato
-            </Link>
-          </li>
+          <>
+            <li>
+              <Link to="/meus-cupons" className={isActive('/meus-cupons')}>
+                <Ticket size={18} /> Meus Cupons
+              </Link>
+            </li>
+            <li>
+              <Link to="/extrato" className={isActive('/extrato')}>
+                <ScrollText size={18} /> Extrato
+              </Link>
+            </li>
+          </>
         )}
 
         {/* PROFESSOR: Enviar Moedas + Extrato */}
