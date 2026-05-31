@@ -69,13 +69,13 @@ sequenceDiagram
         F-->>-P: Exibe mensagem de sucesso
         
         Note over RMQ, M: Processamento assíncrono
-        RMQ-))+EC: Entrega EmailMessageDTO (aluno)
+        RMQ->>+EC: Entrega EmailMessageDTO (aluno)
         EC->>+M: send(SimpleMailMessage)
         M-->>-EC: Email enviado
-        EC--)-RMQ: ACK
-        RMQ-))+EC: Entrega EmailMessageDTO (professor)
+        EC-->>-RMQ: ACK
+        RMQ->>+EC: Entrega EmailMessageDTO (professor)
         EC->>+M: send(SimpleMailMessage)
         M-->>-EC: Email enviado
-        EC--)-RMQ: ACK
+        EC-->>-RMQ: ACK
     end
 ```

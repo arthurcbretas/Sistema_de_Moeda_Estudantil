@@ -41,10 +41,10 @@ sequenceDiagram
     API-->>-F: Retorna Sucesso (200 OK)
     F-->>-P: Mostra mensagem visual de sucesso e atualiza saldo
     Note over RMQ, Mail: Processamento assíncrono
-    RMQ-))+EC: Entrega mensagens de email
+    RMQ->>+EC: Entrega mensagens de email
     EC->>+Mail: Envia e-mail para aluno e professor
     Mail-->>-EC: Emails enviados
-    EC--)-RMQ: ACK
+    EC-->>-RMQ: ACK
     end
 
     %% Fluxo de Cadastro de Vantagens
@@ -84,10 +84,10 @@ sequenceDiagram
     API-->>-F: Retorna Cupom gerado
     F-->>-A: Exibe código na tela e modal de sucesso
     Note over RMQ, Mail: Processamento assíncrono
-    RMQ-))+EC: Entrega mensagens de email
+    RMQ->>+EC: Entrega mensagens de email
     EC->>+Mail: Envia cupom para aluno e notificação para empresa
     Mail-->>-EC: Emails enviados
-    EC--)-RMQ: ACK
+    EC-->>-RMQ: ACK
     A->>F: Acessa página "Meus Cupons" para gerenciar
     end
 ```

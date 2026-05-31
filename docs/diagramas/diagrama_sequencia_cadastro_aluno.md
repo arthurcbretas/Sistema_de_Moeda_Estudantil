@@ -18,7 +18,7 @@ sequenceDiagram
     DB-->>-R: Retorna contagem
     R-->>-S: Retorna se existe
     alt Aluno já existe
-        S-->>-C: Lança Exceção (Dados já em uso)
+        S-->>C: Lança Exceção (Dados já em uso)
         C-->>-F: 400 Bad Request
         F-->>-U: Exibe erro (CPF ou Email já cadastrado)
     else Dados válidos

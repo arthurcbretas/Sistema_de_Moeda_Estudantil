@@ -70,13 +70,13 @@ sequenceDiagram
         F-->>-A: Exibe mensagem de sucesso e código de resgate
         
         Note over RMQ, M: Processamento assíncrono
-        RMQ-))+EC: Entrega EmailMessageDTO (cupom aluno)
+        RMQ->>+EC: Entrega EmailMessageDTO (cupom aluno)
         EC->>+M: send(SimpleMailMessage)
         M-->>-EC: Email enviado
-        EC--)-RMQ: ACK
-        RMQ-))+EC: Entrega EmailMessageDTO (cupom empresa)
+        EC-->>-RMQ: ACK
+        RMQ->>+EC: Entrega EmailMessageDTO (cupom empresa)
         EC->>+M: send(SimpleMailMessage)
         M-->>-EC: Email enviado
-        EC--)-RMQ: ACK
+        EC-->>-RMQ: ACK
     end
 ```
