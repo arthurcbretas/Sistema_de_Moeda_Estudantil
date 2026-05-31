@@ -1,41 +1,29 @@
 package com.sme.service;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import org.springframework.scheduling.annotation.Async;
-
+/**
+ * Serviço de e-mail que monta os templates de mensagens e delega o envio
+ * assíncrono para o RabbitMQ via {@link EmailProducer}.
+ *
+ * Os métodos de template (notificarRecebimentoMoedas, enviarCupomAluno, etc.)
+ * são chamados pelos services de negócio (MoedaService, ResgateService) sem
+ * acoplamento com a infraestrutura de mensageria.
+ */
 @Service
 public class EmailService {
 
-    private final JavaMailSender mailSender;
+    private final EmailProducer emailProducer;
 
-    @Value("${mail.from}")
-    private String fromAddress;
-
-    @Value("${mail.enabled}")
-    private boolean mailEnabled;
-
-    public EmailService(JavaMailSender mailSender) {
-        this.mailSender = mailSender;
+    public EmailService(EmailProducer emailProducer) {
+        this.emailProducer = emailProducer;
     }
 
-    @Async
+    /**
+     * Envia um e-mail genérico via fila RabbitMQ.
+     */
     public void enviarEmail(String to, String subject, String body) {
-        if (!mailEnabled) {
-            System.out.println("[EMAIL SIMULADO] Para: " + to + " | Assunto: " + subject);
-            System.out.println("[EMAIL SIMULADO] Corpo: " + body);
-            return;
-        }
-
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(fromAddress);
-        message.setTo(to);
-        message.setSubject(subject);
-        message.setText(body);
-        mailSender.send(message);
+        emailProducer.enviarParaFila(to, subject, body);
     }
 
     public void notificarRecebimentoMoedas(String emailAluno, String nomeAluno,
