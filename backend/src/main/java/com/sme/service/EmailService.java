@@ -1,58 +1,29 @@
 package com.sme.service;
 
-import jakarta.mail.internet.MimeMessage;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 /**
- * Serviço de e-mail que envia mensagens HTML de forma assíncrona via SMTP.
- * Se mail.enabled=false, apenas simula o envio no console (útil para desenvolvimento).
+ * Serviço de e-mail — camada de orquestração.
+ *
+ * Responsabilidade: montar os templates HTML e delegar a publicação
+ * para a fila RabbitMQ via {@link EmailProducer}.
+ *
+ * O envio real SMTP ocorre no {@link EmailConsumer}, que consome a fila
+ * em uma thread separada, garantindo que a requisição HTTP retorne imediatamente.
+ *
+ * Padrão: Produtor-Consumidor via RabbitMQ.
  */
 @Service
 public class EmailService {
 
-    private final JavaMailSender mailSender;
+    private final EmailProducer emailProducer;
 
-    @Value("${mail.from}")
-    private String fromAddress;
-
-    @Value("${mail.enabled:false}")
-    private boolean mailEnabled;
-
-    public EmailService(JavaMailSender mailSender) {
-        this.mailSender = mailSender;
-    }
-
-    /**
-     * Envia um e-mail HTML de forma assíncrona.
-     * Se MAIL_ENABLED=false, apenas loga no console.
-     */
-    @Async
-    public void enviarEmail(String to, String subject, String htmlBody) {
-        if (!mailEnabled) {
-            System.out.println("[EMAIL SIMULADO] Para: " + to + " | Assunto: " + subject);
-            System.out.println("[EMAIL SIMULADO] Corpo: " + htmlBody.replaceAll("<[^>]+>", ""));
-            return;
-        }
-        try {
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-            helper.setFrom(fromAddress);
-            helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(htmlBody, true);
-            mailSender.send(message);
-            System.out.println("[EMAIL ENVIADO] Para: " + to + " | Assunto: " + subject);
-        } catch (Exception e) {
-            System.err.println("[EMAIL ERRO] Falha ao enviar para: " + to + " - " + e.getMessage());
-        }
+    public EmailService(EmailProducer emailProducer) {
+        this.emailProducer = emailProducer;
     }
 
     // ═══════════════════════════════════════════════════
-    // Templates de email
+    // Templates de email — UC03: Envio de Moedas
     // ═══════════════════════════════════════════════════
 
     public void notificarRecebimentoMoedas(String emailAluno, String nomeAluno,
@@ -81,7 +52,7 @@ public class EmailService {
                 </div>
                 </body></html>
                 """.formatted(nomeAluno, valor, nomeProfessor, motivo);
-        enviarEmail(emailAluno, subject, html);
+        emailProducer.enviarParaFila(emailAluno, subject, html);
     }
 
     public void enviarConfirmacaoEnvioProfessor(String emailProfessor, String nomeProfessor,
@@ -113,8 +84,12 @@ public class EmailService {
                 </div>
                 </body></html>
                 """.formatted(nomeProfessor, valor, nomeAluno, motivo, saldoRestante);
-        enviarEmail(emailProfessor, subject, html);
+        emailProducer.enviarParaFila(emailProfessor, subject, html);
     }
+
+    // ═══════════════════════════════════════════════════
+    // Templates de email — UC08: Resgate de Vantagem
+    // ═══════════════════════════════════════════════════
 
     public void enviarCupomAluno(String emailAluno, String nomeAluno,
                                   String vantagemDescricao, String codigoCupom) {
@@ -146,7 +121,7 @@ public class EmailService {
                 </div>
                 </body></html>
                 """.formatted(nomeAluno, vantagemDescricao, codigoCupom);
-        enviarEmail(emailAluno, subject, html);
+        emailProducer.enviarParaFila(emailAluno, subject, html);
     }
 
     public void enviarCupomEmpresa(String emailEmpresa, String nomeEmpresa,
@@ -180,6 +155,6 @@ public class EmailService {
                 </div>
                 </body></html>
                 """.formatted(nomeEmpresa, nomeAluno, vantagemDescricao, codigoCupom);
-        enviarEmail(emailEmpresa, subject, html);
+        emailProducer.enviarParaFila(emailEmpresa, subject, html);
     }
 }
