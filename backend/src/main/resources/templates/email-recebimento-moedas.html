@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 20px; }
+        .card { background: #fff; border-radius: 12px; padding: 32px; max-width: 520px; margin: 0 auto; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+        .badge { background: #fbbf24; color: #1a1a1a; border-radius: 24px; padding: 8px 20px; font-size: 1.5rem; font-weight: 700; display: inline-block; margin: 16px 0; }
+        .label { color: #6b7280; font-size: .875rem; margin: 0; }
+        .value { color: #1a1a1a; font-size: 1rem; font-weight: 600; margin: 2px 0 12px; }
+        .footer { color: #9ca3af; font-size: .8rem; margin-top: 24px; border-top: 1px solid #e5e7eb; padding-top: 16px; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h2 style="color:#fbbf24;margin-top:0">🪙 Moeda Estudantil</h2>
+    <p>Olá, <strong th:text="${nomeAluno}">Aluno</strong>!</p>
+    <p>Você recebeu moedas como reconhecimento pelo seu mérito acadêmico.</p>
+    <div class="badge">+<span th:text="${valor}">0</span> moedas</div>
+    <p class="label">De:</p><p class="value" th:text="'Professor(a) ' + ${nomeProfessor}">Professor</p>
+    <p class="label">Motivo:</p><p class="value" th:text="${motivo}">Motivo do envio</p>
+    <div class="footer">Sistema de Moeda Estudantil — PUC Minas</div>
+</div>
+</body>
+</html>
