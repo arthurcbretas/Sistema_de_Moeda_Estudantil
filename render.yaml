@@ -1,14 +1,56 @@
+databases:
+  - name: sme-db
+    plan: free
+    databaseName: smedb
+    user: sme_user
+
 services:
+  # ── Backend (Spring Boot via Docker) ──
   - type: web
     name: sme-backend
     runtime: docker
-    dockerfilePath: backend/Dockerfile
-    dockerContext: backend
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
     plan: free
+    healthCheckPath: /api/instituicoes
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
-      - key: DATABASE_URL
+      - key: DB_HOST
         fromDatabase:
           name: sme-db
-          property: connectionString
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: sme-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: sme-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: sme-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: sme-db
+          property: password
+      - key: JWT_SECRET
+        generateValue: true
+      - key: MAIL_HOST
+        value: smtp.gmail.com
+      - key: MAIL_PORT
+        value: "587"
+      - key: MAIL_USERNAME
+        sync: false
+      - key: MAIL_PASSWORD
+        sync: false
+      - key: MAIL_FROM
+        sync: false
+      - key: MAIL_ENABLED
+        value: "true"
+      - key: CLOUDAMQP_URL
+        sync: false
+      - key: PORT
+        value: "8080"

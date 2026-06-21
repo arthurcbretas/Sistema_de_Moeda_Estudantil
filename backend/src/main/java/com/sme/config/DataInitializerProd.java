@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * Inicializa dados mínimos de demonstração em produção (Railway).
+ * Inicializa dados mínimos de demonstração em produção (Render).
  * Apenas executa se o banco estiver vazio — nunca sobrescreve dados existentes.
  */
 @Component
